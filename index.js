@@ -1,10 +1,12 @@
 const Discord = require("discord.js")
-require("dotenv").config()
+const client = new Discord.Client()
+//const config = require('./config.json')
 
 const client= new Discord.Client({
     intents: [
         "GUILDS",
-        "GUILD_MESSAGES"
+        "GUILD_MESSAGES",
+        "GUILD_MEMBERS"
     ]
 })
 
@@ -17,5 +19,13 @@ client.on("messageCreate", (message) =>{
         message.reply("eg")
     }
 })
+
+client.on("guildMemberAdd", (member) => {
+    send(`<@${member.id}> Welcome to the server`)
+
+})
+
+
+
 
 client.login(process.env.TOKEN)
