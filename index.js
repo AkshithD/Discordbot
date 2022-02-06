@@ -1,31 +1,16 @@
-const Discord = require("discord.js")
+const { Client, Collection } = require("discord.js");
 
-
-
-const client= new Discord.Client({
-    intents: [
-        "GUILDS",
-        "GUILD_MESSAGES",
-        "GUILD_MEMBERS"
-    ]
-})
+const client = new Client({
+    intents: 32767,
+});
+module.exports = client;
 
 const prefix = '+'
 
-const fs = require('fs')
-
-client.commands = new Discord.Collection()
-
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'))
-for(const file of commandFiles){
-    const command = require(`./commands/${file}`)
-
-    client.commands.set(command.name, command)
-}
-
-client.on("ready", () => {
-    console.log(`Logged in as ${client.user.tag}`)
-})
+// Global Variables
+client.commands = new Collection();
+client.slashCommands = new Collection();
+client.config = require("./config.json");
 
 client.on("messageCreate", (message) =>{
     if(message.content == "pog"){
@@ -33,32 +18,17 @@ client.on("messageCreate", (message) =>{
     }
 })
 
-client.on("guildMemberAdd", (member) => {
-    message.channel.send(`<@${member.id}> Welcome to the server`)
-
-})
-
 client.on ('messageCreate', (message) =>{
     if(!message.content.startsWith(prefix) || message.author.bot) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-
-    
-
-    if(command === 'ping'){
-        client.commands.get('ping').execute(message, args)
-        
-    }
-
-    if(command === 'clear'){
-        client.commands.get('clear').execute(message, args)
-
-    }
+if(command === 'clear'){
+    client.commands.get('clear').execute(message, args)
+}
 })
 
+// Initializing the project
+require("./handler")(client);
 
-
-
-
-client.login(process.env.TOKEN)
+client.login(process.env.TOKEN);
