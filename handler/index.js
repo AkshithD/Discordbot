@@ -42,20 +42,20 @@ module.exports = async (client) => {
     });
     client.on("ready", async () => {
         // Register for a single guild
-        await client.guilds.cache
-            .get("837523709169369098")
-            .commands.set(arrayOfSlashCommands);
+        // await client.guilds.cache
+           // .get("837523709169369098")
+           // .commands.set(arrayOfSlashCommands);
 
-            await client.guilds.cache
-            .get("858751279161540629")
-            .commands.set(arrayOfSlashCommands);
+           // await client.guilds.cache
+          //  .get("858751279161540629")
+          //  .commands.set(arrayOfSlashCommands);
         
-            await client.guilds.cache
-            .get("310222468646174733")
-            .commands.set(arrayOfSlashCommands);
+          //  await client.guilds.cache
+          //  .get("310222468646174733")
+          //  .commands.set(arrayOfSlashCommands);
 
         // Register for all the guilds the bot is in
-        // await client.application.commands.set(arrayOfSlashCommands);
+         await client.application.commands.set(arrayOfSlashCommands);
     });
 
     // mongoose
